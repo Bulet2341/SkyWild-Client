@@ -1,5 +1,7 @@
 package net.minecraft.client.network;
 
+import net.skywild.SkyWildClient;
+import net.skywild.event.events.EventPacket;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
@@ -573,6 +575,13 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     public void handleEntityVelocity(SPacketEntityVelocity packetIn)
     {
         PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.gameController);
+
+        // --- SKYWILD PACKET EVENT ---
+        EventPacket event = new EventPacket(packetIn);
+        SkyWildClient.getInstance().getEventManager().call(event);
+        if (event.isCancelled()) return;
+        // ----------------------------
+
         Entity entity = this.clientWorldController.getEntityByID(packetIn.getEntityID());
 
         if (entity != null)
@@ -1175,6 +1184,13 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     public void handleExplosion(SPacketExplosion packetIn)
     {
         PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.gameController);
+
+        // --- SKYWILD PACKET EVENT ---
+        EventPacket explosionEvent = new EventPacket(packetIn);
+        SkyWildClient.getInstance().getEventManager().call(explosionEvent);
+        if (explosionEvent.isCancelled()) return;
+        // ----------------------------
+
         Explosion explosion = new Explosion(this.gameController.world, (Entity)null, packetIn.getX(), packetIn.getY(), packetIn.getZ(), packetIn.getStrength(), packetIn.getAffectedBlockPositions());
         explosion.doExplosionB(true);
         this.gameController.player.motionX += (double)packetIn.getMotionX();

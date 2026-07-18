@@ -19,6 +19,7 @@ public class Timer
      * How much time has elapsed since the last tick, in ticks (range: 0.0 - 1.0).
      */
     public float elapsedPartialTicks;
+    public float timerSpeed = 1.0F;
 
     /**
      * The time reported by the system clock at the last sync, in milliseconds
@@ -42,7 +43,7 @@ public class Timer
     public void updateTimer()
     {
         long i = Minecraft.getSystemTime();
-        this.elapsedPartialTicks = (float)(i - this.lastSyncSysClock) / this.tickLength;
+        this.elapsedPartialTicks = (float)(i - this.lastSyncSysClock) / this.tickLength * this.timerSpeed;
         this.lastSyncSysClock = i;
         this.renderPartialTicks += this.elapsedPartialTicks;
         this.elapsedTicks = (int)this.renderPartialTicks;

@@ -1,5 +1,9 @@
 package net.minecraft.client.entity;
 
+import net.skywild.SkyWildClient;
+import net.skywild.event.EventType;
+import net.skywild.event.events.EventUpdate;
+import net.skywild.event.events.EventMotion;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
@@ -232,6 +236,10 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void onUpdate()
     {
+        // --- SKYWILD UPDATE EVENT ---
+        SkyWildClient.getInstance().getEventManager().call(new EventUpdate());
+        // ----------------------------
+
         if (this.world.isBlockLoaded(new BlockPos(this.posX, 0.0D, this.posZ)))
         {
             super.onUpdate();
@@ -293,6 +301,16 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
         if (this.isCurrentViewEntity())
         {
+            // --- SKYWILD MOTION EVENT (PRE) ---
+            EventMotion motionEvent = new EventMotion(this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround);
+            motionEvent.setType(EventType.PRE);
+            SkyWildClient.getInstance().getEventManager().call(motionEvent);
+            float originalYaw = this.rotationYaw;
+            float originalPitch = this.rotationPitch;
+            this.rotationYaw = motionEvent.getYaw();
+            this.rotationPitch = motionEvent.getPitch();
+            // ----------------------------------
+
             AxisAlignedBB axisalignedbb = this.getEntityBoundingBox();
             double d0 = this.posX - this.lastReportedPosX;
             double d1 = axisalignedbb.minY - this.lastReportedPosY;

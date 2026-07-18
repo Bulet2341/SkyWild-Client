@@ -1,5 +1,7 @@
 package net.minecraft.client.gui;
 
+import net.skywild.SkyWildClient;
+import net.skywild.event.events.EventRender2D;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -397,6 +399,11 @@ public class GuiIngame extends Gui
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.disableLighting();
         GlStateManager.enableAlpha();
+
+        // --- SKYWILD RENDER 2D EVENT ---
+        ScaledResolution sr = new ScaledResolution(this.mc);
+        SkyWildClient.getInstance().getEventManager().call(new EventRender2D(sr, partialTicks));
+        // --------------------------------
     }
 
     private void renderAttackIndicator(float p_184045_1_, ScaledResolution p_184045_2_)

@@ -1,0 +1,124 @@
+
+> Task :compileJava
+/workspaces/SkyWild-Client/src/main/java/net/minecraft/client/renderer/chunk/RenderChunk.java:279: warning: non-varargs call of varargs method with inexact argument type for last parameter;
+                        Reflector.callVoid(Reflector.ForgeHooksClient_setRenderLayer, null);
+                                                                                      ^
+  cast to Object for a varargs call
+  cast to Object[] for a non-varargs call and to suppress this warning
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/combat/AutoClicker.java:27: error: clickMouse() has private access in Minecraft
+                else { mc.clickMouse(); }
+                         ^
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/combat/AutoClicker.java:29: error: rightClickMouse() has private access in Minecraft
+            if (rightClick.isEnabled() && Mouse.isButtonDown(1)) { mc.rightClickMouse(); }
+                                                                     ^
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/combat/AimAssist.java:32: error: method getDistance in class Entity cannot be applied to given types;
+        List<EntityLivingBase> targets = mc.world.loadedEntityList.stream().filter(e -> e instanceof EntityPlayer && e != mc.player && mc.player.getDistance(e) <= range.getValue() && !((EntityLivingBase) e).isDead && Math.abs(RotationUtils.getAngleDifference(mc.player.rotationYaw, RotationUtils.getRotations((EntityLivingBase) e)[0])) <= fov.getValue() / 2 && !SkyWildClient.getInstance().getFriendManager().isFriend(e.getName())).map(e -> (EntityLivingBase) e).sorted(Comparator.comparingDouble(e -> mc.player.getDistance(e))).collect(Collectors.toList());
+                                                                                                                                                ^
+  required: double,double,double
+  found: Entity
+  reason: actual and formal argument lists differ in length
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/combat/AimAssist.java:32: error: method getDistance in class Entity cannot be applied to given types;
+        List<EntityLivingBase> targets = mc.world.loadedEntityList.stream().filter(e -> e instanceof EntityPlayer && e != mc.player && mc.player.getDistance(e) <= range.getValue() && !((EntityLivingBase) e).isDead && Math.abs(RotationUtils.getAngleDifference(mc.player.rotationYaw, RotationUtils.getRotations((EntityLivingBase) e)[0])) <= fov.getValue() / 2 && !SkyWildClient.getInstance().getFriendManager().isFriend(e.getName())).map(e -> (EntityLivingBase) e).sorted(Comparator.comparingDouble(e -> mc.player.getDistance(e))).collect(Collectors.toList());
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ^
+  required: double,double,double
+  found: EntityLivingBase
+  reason: actual and formal argument lists differ in length
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/combat/KillAura.java:63: error: method getDistance in class Entity cannot be applied to given types;
+                if (mc.player.getDistance(living) > range.getValue()) continue;
+                             ^
+  required: double,double,double
+  found: EntityLivingBase
+  reason: actual and formal argument lists differ in length
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/combat/KillAura.java:75: error: method getDistance in class Entity cannot be applied to given types;
+            default: targets.sort(Comparator.comparingDouble(e -> mc.player.getDistance(e))); break;
+                                                                           ^
+  required: double,double,double
+  found: EntityLivingBase
+  reason: actual and formal argument lists differ in length
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/render/Nametags.java:34: error: method getDistance in class Entity cannot be applied to given types;
+        String text = sb.toString(); float dist = (float) mc.player.getDistance(player); float ns = (float)(scale.getValue() * 0.01 * Math.max(dist, 4.0));
+                                                                   ^
+  required: double,double,double
+  found: EntityPlayer
+  reason: actual and formal argument lists differ in length
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/render/ToggleSneak.java:12: error: cannot find symbol
+        if (sprint.isEnabled() && mc.player.moveForward > 0 && !mc.player.isSneaking() && !mc.player.collidedHorizontally) mc.player.setSprinting(true);
+                                                                                                    ^
+  symbol:   variable collidedHorizontally
+  location: variable player of type EntityPlayerSP
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/movement/Timer.java:10: error: timer has private access in Minecraft
+    @EventTarget public void onUpdate(EventUpdate event) { if (!nullCheck()) { mc.timer.timerSpeed = speed.getValueFloat(); setSuffix(String.format("%.1f", speed.getValue())); } }
+                                                                                 ^
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/movement/Timer.java:10: error: cannot find symbol
+    @EventTarget public void onUpdate(EventUpdate event) { if (!nullCheck()) { mc.timer.timerSpeed = speed.getValueFloat(); setSuffix(String.format("%.1f", speed.getValue())); } }
+                                                                                       ^
+  symbol:   variable timerSpeed
+  location: variable timer of type Timer
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/movement/Timer.java:11: error: timer has private access in Minecraft
+    @Override public void onDisable() { mc.timer.timerSpeed = 1.0F; }
+                                          ^
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/movement/Timer.java:11: error: cannot find symbol
+    @Override public void onDisable() { mc.timer.timerSpeed = 1.0F; }
+                                                ^
+  symbol:   variable timerSpeed
+  location: variable timer of type Timer
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/movement/Eagle.java:14: error: pressed has private access in KeyBinding
+        mc.gameSettings.keyBindSneak.pressed = edgeOnly.isEnabled() ? (overVoid && mc.player.onGround) : mc.player.onGround;
+                                    ^
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/movement/Eagle.java:16: error: pressed has private access in KeyBinding
+    @Override public void onDisable() { if (mc.gameSettings != null) mc.gameSettings.keyBindSneak.pressed = false; }
+                                                                                                 ^
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/movement/Speed.java:14: error: timer has private access in Minecraft
+    @Override public void onDisable() { mc.timer.timerSpeed = 1.0F; }
+                                          ^
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/movement/Speed.java:14: error: cannot find symbol
+    @Override public void onDisable() { mc.timer.timerSpeed = 1.0F; }
+                                                ^
+  symbol:   variable timerSpeed
+  location: variable timer of type Timer
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/movement/Sprint.java:14: error: cannot find symbol
+        boolean canSprint = !mc.player.isSneaking() && !mc.player.collidedHorizontally;
+                                                                 ^
+  symbol:   variable collidedHorizontally
+  location: variable player of type EntityPlayerSP
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/player/FastPlace.java:10: error: rightClickDelayTimer has private access in Minecraft
+    @EventTarget public void onUpdate(EventUpdate event) { if (!nullCheck()) mc.rightClickDelayTimer = delay.getValueInt(); }
+                                                                               ^
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/player/FastPlace.java:11: error: rightClickDelayTimer has private access in Minecraft
+    @Override public void onDisable() { mc.rightClickDelayTimer = 4; }
+                                          ^
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/player/AutoTool.java:18: error: cannot find symbol
+            if (!stack.isEmpty()) { float speed = stack.getDestroySpeed(state); if (speed > bestSpeed) { bestSpeed = speed; bestSlot = i; } }
+                                                       ^
+  symbol:   method getDestroySpeed(IBlockState)
+  location: variable stack of type ItemStack
+/workspaces/SkyWild-Client/src/main/java/net/skywild/module/modules/player/Scaffold.java:27: error: method add in class Vec3d cannot be applied to given types;
+        Vec3d hit = new Vec3d(target).add(0.5, 0.5, 0.5).add(new Vec3d(facing.getDirectionVec()).scale(0.5));
+                                     ^
+  required: Vec3d
+  found: double,double,double
+  reason: actual and formal argument lists differ in length
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+21 errors
+1 warning
+
+> Task :compileJava FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 20s
+1 actionable task: 1 executed

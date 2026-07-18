@@ -1,5 +1,7 @@
 package net.minecraft.client.renderer;
 
+import net.skywild.SkyWildClient;
+import net.skywild.event.events.EventRender3D;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
@@ -1547,6 +1549,10 @@ public class EntityRenderer implements IResourceManagerReloadListener
         {
             this.renderWorldPass(2, partialTicks, finishTimeNano);
         }
+
+        // --- SKYWILD RENDER 3D EVENT ---
+        SkyWildClient.getInstance().getEventManager().call(new EventRender3D(partialTicks));
+        // --------------------------------
 
         this.mc.mcProfiler.endSection();
     }

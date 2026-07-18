@@ -1,5 +1,9 @@
 package net.minecraft.client;
 
+import net.skywild.SkyWildClient;
+import net.skywild.gui.mainmenu.SkyWildMainMenu;
+import net.skywild.event.events.EventKey;
+import net.skywild.event.events.EventTick;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
@@ -252,7 +256,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
 
     /** True if the player is connected to a realms server */
     private boolean connectedToRealms;
-    private final Timer timer = new Timer(20.0F);
+    public final Timer timer = new Timer(20.0F);
 
     /** Instance of PlayerUsageSnooper. */
     private final Snooper usageSnooper = new Snooper("client", this, MinecraftServer.getCurrentTimeMillis());
@@ -331,7 +335,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
     /**
      * When you place a block, it's set to 6, decremented once per tick, when it's 0, you can place another block.
      */
-    private int rightClickDelayTimer;
+    public int rightClickDelayTimer;
     private String serverName;
     private int serverPort;
 
@@ -614,7 +618,10 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         }
         else
         {
-            this.displayGuiScreen(new GuiMainMenu());
+            // --- SKYWILD CLIENT INIT ---
+            SkyWildClient.getInstance().init();
+            this.displayGuiScreen(new SkyWildMainMenu());
+            // ---------------------------
         }
 
         this.renderEngine.deleteTexture(this.mojangLogo);
@@ -1522,6 +1529,9 @@ public class Minecraft implements IThreadListener, ISnooperInfo
      */
     public void shutdown()
     {
+        // --- SKYWILD SHUTDOWN ---
+        SkyWildClient.getInstance().shutdown();
+        // ------------------------
         this.running = false;
     }
 
@@ -1602,7 +1612,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
         }
     }
 
-    private void clickMouse()
+    public void clickMouse()
     {
         if (this.leftClickCounter <= 0)
         {
@@ -1651,7 +1661,7 @@ public class Minecraft implements IThreadListener, ISnooperInfo
     /**
      * Called when user clicked he's mouse right button (place)
      */
-    private void rightClickMouse()
+    public void rightClickMouse()
     {
         if (!this.playerController.getIsHittingBlock())
         {
@@ -2028,6 +2038,10 @@ public class Minecraft implements IThreadListener, ISnooperInfo
 
         this.mcProfiler.endSection();
         this.systemTime = getSystemTime();
+
+        // --- SKYWILD TICK EVENT ---
+        SkyWildClient.getInstance().getEventManager().call(new EventTick());
+        // --------------------------
     }
 
     private void runTickKeyboard() throws IOException
@@ -2062,6 +2076,12 @@ public class Minecraft implements IThreadListener, ISnooperInfo
             }
 
             boolean flag = Keyboard.getEventKeyState();
+
+            // --- SKYWILD KEY EVENT ---
+            if (flag && this.currentScreen == null) {
+                SkyWildClient.getInstance().getEventManager().call(new EventKey(i));
+            }
+            // -------------------------
 
             if (flag)
             {
