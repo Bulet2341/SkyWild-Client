@@ -80,9 +80,9 @@ teavm.js {
     sourceMap = true
     targetFileName = "../classes.js"
     // optimization = OptimizationLevel.ADVANCED
-    outOfProcess = false
+    outOfProcess = true
     fastGlobalAnalysis = false
-    processMemory = 1024
+    processMemory = 1536
     entryPointName = 'main'
     mainClass = 'Start'
     outputDir = file("javascript")
